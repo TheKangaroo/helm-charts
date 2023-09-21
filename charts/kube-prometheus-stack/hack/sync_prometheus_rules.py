@@ -28,37 +28,37 @@ def change_style(style, representer):
 # Source files list
 charts = [
     {
-        'source': 'https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/alertmanager-prometheusRule.yaml',
+        'source': 'https://raw.githubusercontent.com/TheKangaroo/kube-prometheus/main/manifests/alertmanager-prometheusRule.yaml',
         'destination': '../templates/prometheus/rules-1.14',
         'min_kubernetes': '1.14.0-0'
     },
     {
-        'source': 'https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/kubePrometheus-prometheusRule.yaml',
+        'source': 'https://raw.githubusercontent.com/TheKangaroo/kube-prometheus/main/manifests/kubePrometheus-prometheusRule.yaml',
         'destination': '../templates/prometheus/rules-1.14',
         'min_kubernetes': '1.14.0-0'
     },
     {
-        'source': 'https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/kubernetesControlPlane-prometheusRule.yaml',
+        'source': 'https://raw.githubusercontent.com/TheKangaroo/kube-prometheus/main/manifests/kubernetesControlPlane-prometheusRule.yaml',
         'destination': '../templates/prometheus/rules-1.14',
         'min_kubernetes': '1.14.0-0'
     },
     {
-        'source': 'https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/kubeStateMetrics-prometheusRule.yaml',
+        'source': 'https://raw.githubusercontent.com/TheKangaroo/kube-prometheus/main/manifests/kubeStateMetrics-prometheusRule.yaml',
         'destination': '../templates/prometheus/rules-1.14',
         'min_kubernetes': '1.14.0-0'
     },
     {
-        'source': 'https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/nodeExporter-prometheusRule.yaml',
+        'source': 'https://raw.githubusercontent.com/TheKangaroo/kube-prometheus/main/manifests/nodeExporter-prometheusRule.yaml',
         'destination': '../templates/prometheus/rules-1.14',
         'min_kubernetes': '1.14.0-0'
     },
     {
-        'source': 'https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/prometheus-prometheusRule.yaml',
+        'source': 'https://raw.githubusercontent.com/TheKangaroo/kube-prometheus/main/manifests/prometheus-prometheusRule.yaml',
         'destination': '../templates/prometheus/rules-1.14',
         'min_kubernetes': '1.14.0-0'
     },
     {
-        'source': 'https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/prometheusOperator-prometheusRule.yaml',
+        'source': 'https://raw.githubusercontent.com/TheKangaroo/kube-prometheus/main/manifests/prometheusOperator-prometheusRule.yaml',
         'destination': '../templates/prometheus/rules-1.14',
         'min_kubernetes': '1.14.0-0'
     },
@@ -101,6 +101,8 @@ condition_map = {
     'node-network': ' .Values.defaultRules.rules.network',
     'prometheus-operator': ' .Values.defaultRules.rules.prometheusOperator',
     'prometheus': ' .Values.defaultRules.rules.prometheus', # kube-prometheus >= 1.14 uses prometheus as group instead of prometheus.rules
+    'windows.node.rules': ' .Values.windowsMonitoring.enabled .Values.defaultRules.rules.windows',
+    'windows.pod.rules': ' .Values.windowsMonitoring.enabled .Values.defaultRules.rules.windows',
 }
 
 alert_condition_map = {
@@ -145,7 +147,10 @@ replacement_map = {
         'init': ''},
     '(namespace,service)': {
         'replacement': '(namespace,service,cluster)',
-        'init': ''}
+        'init': ''},
+    'job="kubernetes-windows-exporter"': {
+        'replacement': 'job="{{ .Values.windowsMonitoring.job }}"',
+        'init': ''},
 }
 
 # standard header

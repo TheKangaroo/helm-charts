@@ -28,7 +28,7 @@ def change_style(style, representer):
 # Source files list
 charts = [
     {
-        'source': 'https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/grafana-dashboardDefinitions.yaml',
+        'source': 'https://raw.githubusercontent.com/TheKangaroo/kube-prometheus/main/manifests/grafana-dashboardDefinitions.yaml',
         'destination': '../templates/grafana/dashboards-1.14',
         'type': 'yaml',
         'min_kubernetes': '1.14.0-0',
@@ -56,7 +56,12 @@ condition_map = {
     'node-cluster-rsrc-use': ' .Values.nodeExporter.enabled',
     'nodes': ' .Values.nodeExporter.operatingSystems.linux.enabled',
     'nodes-darwin': ' .Values.nodeExporter.operatingSystems.darwin.enabled',
-    'prometheus-remote-write': ' .Values.prometheus.prometheusSpec.remoteWriteDashboards'
+    'prometheus-remote-write': ' .Values.prometheus.prometheusSpec.remoteWriteDashboards',
+    'k8s-resources-windows-cluster': ' .Values.windowsMonitoring.enabled',
+    'k8s-resources-windows-namespace': ' .Values.windowsMonitoring.enabled',
+    'k8s-resources-windows-pod': ' .Values.windowsMonitoring.enabled',
+    'k8s-windows-cluster-rsrc-use': ' .Values.windowsMonitoring.enabled',
+    'k8s-windows-node-rsrc-use': ' .Values.windowsMonitoring.enabled',
 }
 
 # standard header
